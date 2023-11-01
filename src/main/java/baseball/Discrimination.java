@@ -36,6 +36,20 @@ public class Discrimination {
         this.out = compareMap.size();
     }
 
+    public String print() {
+        StringBuilder sb = new StringBuilder();
+        if (getBall() > 0) {
+            sb.append(String.format("%d볼 ", getBall()));
+        }
+
+        if (getStrike() > 0) {
+            sb.append(String.format("%d스트라이크", getStrike()));
+        }
+
+        sb.append(System.lineSeparator());
+        return sb.toString();
+    }
+
     public int getStrike() {
         return strike;
     }
