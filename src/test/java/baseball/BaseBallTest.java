@@ -3,7 +3,8 @@ package baseball;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import util.baseball.BaseBall;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BaseBallTest {
 
@@ -11,23 +12,25 @@ class BaseBallTest {
     void 컴퓨터가_세_개의_숫자를_선택() {
         // given
         BaseBall baseBall = new BaseBall();
+        baseBall.setNewGame();
 
         // when
-        TargetNumber base = baseBall.setTargetNumber();
+        Number base = baseBall.getTargetNumber();
 
         // then
-        assertThat(base.size()).isEqualTo(3);
+        assertThat(base.get().length).isEqualTo(3);
     }
 
     @ParameterizedTest
     @CsvSource(value = {"135:218", "135:241", "248:435", "248:134", "123:389", "123:739"}, delimiter = ':')
     void one_ball(String targetNumber, String input) {
         // given
-        TargetNumber base = new TargetNumber(Integer.parseInt(targetNumber));
+        BaseBall baseBall = new BaseBall();
+        baseBall.setTargetNumber(new Number(Integer.parseInt(targetNumber)));
         int compare = Integer.parseInt(input);
 
         // when
-        Discrimination result = base.discriminate(compare);
+        Discrimination result = baseBall.discriminate(compare);
 
         // then
         assertThat(result.getBall()).isEqualTo(1);
@@ -38,11 +41,13 @@ class BaseBallTest {
     @ParameterizedTest
     @CsvSource(value = {"135:213", "135:251", "248:452", "248:854", "123:219", "123:319"}, delimiter = ':')
     void two_ball(String targetNumber, String input) {
-        TargetNumber base = new TargetNumber(Integer.parseInt(targetNumber));
+        // given
+        BaseBall baseBall = new BaseBall();
+        baseBall.setTargetNumber(new Number(Integer.parseInt(targetNumber)));
         int compare = Integer.parseInt(input);
 
         // when
-        Discrimination result = base.discriminate(compare);
+        Discrimination result = baseBall.discriminate(compare);
 
         // then
         assertThat(result.getBall()).isEqualTo(2);
@@ -53,11 +58,13 @@ class BaseBallTest {
     @ParameterizedTest
     @CsvSource(value = {"135:513", "135:351"}, delimiter = ':')
     void three_ball(String targetNumber, String input) {
-        TargetNumber base = new TargetNumber(Integer.parseInt(targetNumber));
+        // given
+        BaseBall baseBall = new BaseBall();
+        baseBall.setTargetNumber(new Number(Integer.parseInt(targetNumber)));
         int compare = Integer.parseInt(input);
 
         // when
-        Discrimination result = base.discriminate(compare);
+        Discrimination result = baseBall.discriminate(compare);
 
         // then
         assertThat(result.getBall()).isEqualTo(3);
@@ -66,13 +73,15 @@ class BaseBallTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"135:218", "135:241", "248:435", "248:134", "123:389", "123:739"}, delimiter = ':')
+    @CsvSource(value = {"135:148", "135:238", "135:245"}, delimiter = ':')
     void one_strike(String targetNumber, String input) {
-        TargetNumber base = new TargetNumber(Integer.parseInt(targetNumber));
+        // given
+        BaseBall baseBall = new BaseBall();
+        baseBall.setTargetNumber(new Number(Integer.parseInt(targetNumber)));
         int compare = Integer.parseInt(input);
 
         // when
-        Discrimination result = base.discriminate(compare);
+        Discrimination result = baseBall.discriminate(compare);
 
         // then
         assertThat(result.getBall()).isEqualTo(0);
@@ -83,11 +92,13 @@ class BaseBallTest {
     @ParameterizedTest
     @CsvSource(value = {"135:138", "135:235", "135:145"}, delimiter = ':')
     void two_strike(String targetNumber, String input) {
-        TargetNumber base = new TargetNumber(Integer.parseInt(targetNumber));
+        // given
+        BaseBall baseBall = new BaseBall();
+        baseBall.setTargetNumber(new Number(Integer.parseInt(targetNumber)));
         int compare = Integer.parseInt(input);
 
         // when
-        Discrimination result = base.discriminate(compare);
+        Discrimination result = baseBall.discriminate(compare);
 
         // then
         assertThat(result.getBall()).isEqualTo(0);
@@ -98,11 +109,13 @@ class BaseBallTest {
     @ParameterizedTest
     @CsvSource(value = {"135:215", "135:231", "248:438", "248:234", "123:329", "123:139"}, delimiter = ':')
     void one_ball_one_strike(String targetNumber, String input) {
-        TargetNumber base = new TargetNumber(Integer.parseInt(targetNumber));
+        // given
+        BaseBall baseBall = new BaseBall();
+        baseBall.setTargetNumber(new Number(Integer.parseInt(targetNumber)));
         int compare = Integer.parseInt(input);
 
         // when
-        Discrimination result = base.discriminate(compare);
+        Discrimination result = baseBall.discriminate(compare);
 
         // then
         assertThat(result.getBall()).isEqualTo(1);
@@ -113,11 +126,13 @@ class BaseBallTest {
     @ParameterizedTest
     @CsvSource(value = {"135:135", "248:248", "123:123"}, delimiter = ':')
     void three_strike(String targetNumber, String input) {
-        TargetNumber base = new TargetNumber(Integer.parseInt(targetNumber));
+        // given
+        BaseBall baseBall = new BaseBall();
+        baseBall.setTargetNumber(new Number(Integer.parseInt(targetNumber)));
         int compare = Integer.parseInt(input);
 
         // when
-        Discrimination result = base.discriminate(compare);
+        Discrimination result = baseBall.discriminate(compare);
 
         // then
         assertThat(result.getBall()).isEqualTo(0);
