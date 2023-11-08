@@ -15,4 +15,35 @@ public class Number {
     public int[] get() {
         return Arrays.copyOf(nums, 3);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        int[] compare = ((Number) obj).get();
+
+        if (nums.length != compare.length) {
+            return false;
+        }
+
+        for (int i = 0; i < this.nums.length; i++) {
+            if (nums[i] != compare[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 1;
+        for (int num : nums) {
+            hashCode = 31 * hashCode + num;
+        }
+
+        return hashCode;
+    }
 }
